@@ -1,5 +1,6 @@
 package com.learn.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.learn.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -36,9 +37,11 @@ public class UserDTO {
 
     @NotBlank
     @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,}")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String passWord;
 
     @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String confirmPassWord;
 
     private boolean enabled;
