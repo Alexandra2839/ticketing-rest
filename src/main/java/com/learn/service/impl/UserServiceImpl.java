@@ -4,6 +4,7 @@ import com.learn.dto.ProjectDTO;
 import com.learn.dto.TaskDTO;
 import com.learn.dto.UserDTO;
 import com.learn.entity.User;
+import com.learn.exception.TicketingProjectException;
 import com.learn.mapper.UserMapper;
 import com.learn.repository.UserRepository;
 import com.learn.service.KeycloakService;
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(String username) {
+    public void delete(String username) throws TicketingProjectException {
 
         User user = userRepository.findByUserNameAndIsDeleted(username, false);
 
@@ -90,6 +91,9 @@ public class UserServiceImpl implements UserService {
             user.setIsDeleted(true);
             user.setUserName(user.getUserName() + "-" + user.getId());  // harold@manager.com-2
             userRepository.save(user);
+        }
+        else{
+            throw new TicketingProjectException("User can not be deleted");
         }
 
     }
