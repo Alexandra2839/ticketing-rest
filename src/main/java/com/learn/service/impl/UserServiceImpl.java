@@ -1,5 +1,6 @@
 package com.learn.service.impl;
 
+import com.learn.annotation.DefaultExceptionMessage;
 import com.learn.dto.ProjectDTO;
 import com.learn.dto.TaskDTO;
 import com.learn.dto.UserDTO;
@@ -83,6 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @DefaultExceptionMessage(defaultMessage = "Failed to Delete user")
     public void delete(String username) throws TicketingProjectException {
 
         User user = userRepository.findByUserNameAndIsDeleted(username, false);
