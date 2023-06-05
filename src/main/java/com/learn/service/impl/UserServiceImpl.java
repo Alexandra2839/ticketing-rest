@@ -6,6 +6,7 @@ import com.learn.dto.UserDTO;
 import com.learn.entity.User;
 import com.learn.mapper.UserMapper;
 import com.learn.repository.UserRepository;
+import com.learn.service.KeycloakService;
 import com.learn.service.ProjectService;
 import com.learn.service.TaskService;
 import com.learn.service.UserService;
@@ -23,11 +24,14 @@ public class UserServiceImpl implements UserService {
     private final ProjectService projectService;
     private final TaskService taskService;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy ProjectService projectService, @Lazy TaskService taskService) {
+    private final KeycloakService keycloakService;
+
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy ProjectService projectService, @Lazy TaskService taskService, KeycloakService keycloakService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.projectService = projectService;
         this.taskService = taskService;
+        this.keycloakService = keycloakService;
     }
 
     @Override
@@ -50,6 +54,8 @@ public class UserServiceImpl implements UserService {
         User obj = userMapper.convertToEntity(user);
 
         userRepository.save(obj);
+
+        keycloakService.userCreate(user);
 
     }
 
