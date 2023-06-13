@@ -1,5 +1,6 @@
 package com.learn.controller;
 
+import com.learn.annotation.ExecutionTime;
 import com.learn.dto.ResponseWrapper;
 import com.learn.dto.UserDTO;
 import com.learn.exception.TicketingProjectException;
@@ -23,6 +24,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @ExecutionTime
     @GetMapping
     @RolesAllowed({"Manager", "Admin"})
     @Operation(summary = "Get users")
@@ -30,6 +32,7 @@ public class UserController {
         return ResponseEntity.ok(new ResponseWrapper("Users are successfully retrieved", userService.listAllUsers(), HttpStatus.OK));
     }
 
+    @ExecutionTime
     @GetMapping("/{username}")
     @RolesAllowed("Admin")
     @Operation(summary = "Get user by username")
